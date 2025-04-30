@@ -2,6 +2,7 @@ import cv2
 from cvzone.HandTrackingModule import HandDetector
 import numpy as np
 from key import Key
+import time
 
 # Open webcam
 cap = cv2.VideoCapture(0)
@@ -62,7 +63,7 @@ def draw_keyboard(img):
         cv2.putText(imgNew, text, (text_x, text_y), font, font_scale, (255, 255, 255), thickness)
 
     out = img.copy()
-    alpha = 0.4
+    alpha = 0.3
     mask = imgNew.astype(bool)
     out[mask] = cv2.addWeighted(img, alpha, imgNew, 1 - alpha, 0)[mask]
 
@@ -137,6 +138,8 @@ while True:
                                     textWritten = textWritten[:-1]
                                 else:
                                     textWritten += text
+                                # Avoid many text writing
+                                time.sleep(0.05)
                 else:
                     index_finger = (lmList[8][0], lmList[8][1])
                     inch_finger = (lmList[4][0], lmList[4][1])
