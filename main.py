@@ -22,7 +22,7 @@ detector = HandDetector(detectionCon=0.8, maxHands=2)
 
 # List of key
 keyList = []
-alphabet = ['A', 'Z', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'W', 'X', 'C', 'V', 'B', 'N', 'De']
+alphabet = ['A', 'Z', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'W', 'X', 'C', 'V', 'B', 'N', 'De', '_']
 for key_index, label in enumerate(alphabet):
     if key_index % 10 == 0: x_gap = 0
     keyList.append(
@@ -63,7 +63,7 @@ def draw_keyboard(img):
         cv2.putText(imgNew, text, (text_x, text_y), font, font_scale, (255, 255, 255), thickness)
 
     out = img.copy()
-    alpha = 0.3
+    alpha = 0.1
     mask = imgNew.astype(bool)
     out[mask] = cv2.addWeighted(img, alpha, imgNew, 1 - alpha, 0)[mask]
 
@@ -136,6 +136,8 @@ while True:
                                 text = selectedKey.label
                                 if text == 'De':
                                     textWritten = textWritten[:-1]
+                                elif text == '_':
+                                    textWritten += ' '
                                 else:
                                     textWritten += text
                                 # Avoid many text writing
